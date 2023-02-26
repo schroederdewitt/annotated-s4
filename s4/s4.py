@@ -1360,6 +1360,9 @@ def sample(model, params, prime, cache, x, start, end, rng):
 
 
 def init_recurrence(model, params, init_x, rng):
+    """
+    from: https://srush.github.io/annotated-s4/
+    """
     variables = model.init(rng, init_x)
     vars = {
         "params": params,
@@ -1372,8 +1375,6 @@ def init_recurrence(model, params, init_x, rng):
 
 
 # Putting this altogether we can sample from a model directly.
-
-
 def sample_checkpoint(path, model, length, rng):
     from flax.training import checkpoints
 

@@ -144,6 +144,42 @@ def create_mnist_dataset(bsz=128):
 
     return trainloader, testloader, N_CLASSES, SEQ_LENGTH, IN_DIM
 
+# ### CIFAR-10 Classification
+# **Task**: Predict CIFAR-10 class given sequence model over pixels (32 x 32 x 3 RGB image => 10 classes).
+def create_cifar_dataset(bsz=128):
+    print("[*] Generating CIFAR-10 Dataset")
+
+    # Constants
+    SEQ_LENGTH, N_CLASSES, IN_DIM = 784, 256, 1
+    tf = transforms.Compose(
+        [
+            transforms.ToTensor(),
+            #transforms.Normalize(
+            #    (0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)
+            #),
+            transforms.Resize((28, 28)),
+            transforms.Grayscale(),
+            transforms.Lambda(lambda x: (x.view(IN_DIM, SEQ_LENGTH).t() * 255).int()),
+        ]
+    )
+
+    train = torchvision.datasets.CIFAR10(
+        "./data", train=True, download=True, transform=tf
+    )
+    test = torchvision.datasets.CIFAR10(
+        "./data", train=False, download=True, transform=tf
+    )
+
+    # Return data loaders, with the provided batch size
+    trainloader = torch.utils.data.DataLoader(
+        train, batch_size=bsz, shuffle=True
+    )
+    testloader = torch.utils.data.DataLoader(
+        test, batch_size=bsz, shuffle=False
+    )
+
+    return trainloader, testloader, N_CLASSES, SEQ_LENGTH, IN_DIM
+
 
 # ### QuickDraw Drawing Generation
 # **Task**: Given dataset of <50M Google QuickDraw Sketches as 28 x 28 grayscale values, predict next pixel in an
@@ -661,6 +697,7 @@ def create_listops_classification_dataset(bsz):
 
 Datasets = {
     "mnist": create_mnist_dataset,
+    "cifar": create_cifar_dataset,
     "quickdraw": create_quickdraw_dataset,
     "fsdd": create_fsdd_dataset,
     "sc": create_sc_dataset,

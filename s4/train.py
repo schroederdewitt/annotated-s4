@@ -10,10 +10,10 @@ from flax import linen as nn
 from flax.training import checkpoints, train_state
 from omegaconf import DictConfig, OmegaConf
 from tqdm import tqdm
-from .data import Datasets
-from .dss import DSSLayer
-from .s4 import BatchStackedModel, S4Layer, SSMLayer, sample_image_prefix
-from .s4d import S4DLayer
+from data import Datasets
+from dss import DSSLayer
+from s4 import BatchStackedModel, S4Layer, SSMLayer, sample_image_prefix
+from s4d import S4DLayer
 
 
 try:
@@ -385,7 +385,8 @@ def example_train(
             )
 
         if train.sample is not None:
-            if dataset == "mnist":  # Should work for QuickDraw too but untested
+            #if dataset == "mnist":  # Should work for QuickDraw too but untested
+            if dataset in ["mnist", "cifar"]:  # Should work for QuickDraw too but untested
                 sample_fn = partial(
                     sample_image_prefix, imshape=(28, 28)
                 )  # params=state["params"], length=784, bsz=64, prefix=train.sample)

@@ -34,7 +34,7 @@
 # Space (DSS) variant can be easily implemented in PyTorch with some minor changes.
 
 # import s4.s4 as s4  TODO -- For some reason breaks streamlit...
-from . import s4
+import s4
 from functools import partial
 import jax
 import jax.numpy as np
