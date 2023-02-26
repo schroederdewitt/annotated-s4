@@ -10,7 +10,7 @@ docker run -it --rm \
     --runtime=nvidia \
     --gpus all \
     --name $name \
-    --user 0 \
+    --user 1001 \
     -v `pwd`:/home/duser/entryfolder \
     -e PYTHONPATH=/home/duser/entryfolder \
     -t annotated_s4 \
