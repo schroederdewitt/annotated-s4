@@ -5,9 +5,9 @@ name=${USER}_annotated_s4_GPU__${HASH}
 echo "Launching container named '${name}'"
 # Launches a docker container using our image, and runs the provided command
 
-docker run -it --rm \
+CUDA_VISIBLE_DEVICES 3 docker run -it --rm \
     --runtime=nvidia \
-    --gpus $1 \
+    --gpus all \
     --name $name \
     --user 1001 \
     -v `pwd`:/home/duser/entryfolder \
