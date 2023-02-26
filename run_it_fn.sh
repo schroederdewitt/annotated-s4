@@ -7,7 +7,7 @@ echo "Launching container named '${name}'"
 
 docker run -it --rm \
     --runtime=nvidia \
-    --gpus "'\"device=$CUDA_VISIBLE_DEVICES\"'" \
+    --gpus "device=$CUDA_VISIBLE_DEVICES" \
     --name $name \
     --user 1001 \
     -v `pwd`:/home/duser/entryfolder \
